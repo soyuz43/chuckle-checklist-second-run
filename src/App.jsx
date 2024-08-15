@@ -5,6 +5,9 @@ import { useState } from "react";
 export const App = () => {
   // State to hold the input value
   const [joke, setJoke] = useState("");
+  const [allJokes, setAllJokes] = useState([]);
+  const [untoldJokes, setUntoldJokes] = useState([]);
+  const [toldJokes, setToldJokes] = useState([]);
 
   // Function to handle input change
   const handleChange = (event) => {
@@ -17,15 +20,10 @@ export const App = () => {
     event.preventDefault();
     if (joke.trim()) {
       // Ensure the joke is not just whitespace
-      try {
-        await addJoke(joke);
-        setJoke(""); // Clear the input field after submission
-        alert("Joke added successfully!");
-      } catch (error) {
-        alert("Failed to add joke.");
-      }
-    } else {
-      alert("Please enter a joke.");
+      const newJoke = await addJoke(joke);
+      setAllJokes([...allJokes, newJoke]); // Add new joke to all jokes
+      setUntoldJokes([...untoldJokes, newJoke]); // Add new joke to untold jokes
+      setJoke(''); // Clear the input field after submission
     }
   };
 
@@ -42,6 +40,14 @@ export const App = () => {
         />
         <button type="submit">Add Joke</button>
       </form>
+      <div>
+        <h2>All Jokes</h2>
+        <ul>{allJokes.map(joke => <li key={joke.id}>{joke.text}</li>)}</ul>
+        <h2>Untold Jokes</h2>
+        <ul>{untoldJokes.map(joke => <li key={joke.id}>{joke.text}</li>)}</ul>
+        <h2>Told Jokes</h2>
+        <ul>{toldJokes.map(joke => <li key={joke.id}>{joke.text}</li>)}</ul>
+      </div>
     </div>
   );
 };
