@@ -25,3 +25,10 @@ export const addJoke = async (text) => {
     throw error; // Re-throw the error to be handled by the calling function
   }
 };
+
+
+// Function to fetch jokes
+export const fetchJokes = async () => {
+  const response = await fetch('http://localhost:8088/jokes');
+  return response.json();
+};
