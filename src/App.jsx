@@ -29,7 +29,7 @@ export const App = () => {
 
   return (
     <div className="App">
-      <h1>Hello World!</h1>
+      <h1>Chuckle Checklist!</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
